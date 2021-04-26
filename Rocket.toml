@@ -1,0 +1,4 @@
+[development]
+template_dir = "templates/"
+secret_key = "whG2loe+x88MI0ZyPbhF5g9YbAb0C/npYcKqD3WAR2g="
+
