@@ -24,8 +24,8 @@
                                 class="text-muted fw-light"></small>
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>2320190039</li>
-                            <li>19 de diciembre 2020</li>
+                            <li>No. 2320190039</li>
+                            <li>Inicio: 19 de diciembre 2020</li>
                             <li>Mensualidad 1 de 360</li>
                             <li>$504, 494.10</li>
                         </ul>
@@ -66,7 +66,7 @@
                             <li>$504, 494.10 Saldo Insoluto</li>
                             <li>$104, 494.10 Intereses pagados</li>
                             <li>$104, 494.10 Capital pagado</li>
-                            <li>3 meses 3 dias tiempo transcurridos</li>
+                            <li>Tiempo transcurrido: 2 años, 3 meses y 3 dias</li>
                         </ul>
                         <button type="button" class="w-100 btn btn-lg btn-primary">Plan de pago</button>
                     </div>
