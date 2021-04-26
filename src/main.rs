@@ -8,8 +8,8 @@ use std::collections::HashMap;
 
 #[get("/")]
 fn index() -> Template {
-    let mut context: HashMap<&str, i32> = HashMap::new();
-    context.insert("test", 1);
+    let mut context: HashMap<String, i32> = HashMap::new();
+    context.insert("test".to_string(), 1);
     Template::render("index", &context)
 }
 
