@@ -22,14 +22,14 @@
                     <div class="card-body">
                         <h1 class="card-title pricing-card-title">
                                 <small class="text-muted fw-light">
-                                {{ credit_name }}
+                                {{ credit.credit_name }}
                                 </small>
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>No. {{ credit_number }}</li>
-                            <li>Inicio: {{start_date}}</li>
+                            <li>No. {{ credit.credit_number }}</li>
+                            <li>{{ credit_start_date }}</li>
                             <li>Mensualidad 1 de 360</li>
-                            <li>${{total_credit_amount}}</li>
+                            <li>${{ credit.total_credit_amount }}</li>
                         </ul>
                         <button type="button" class="w-100 btn btn-lg btn-outline-primary">Editar</button>
                     </div>
