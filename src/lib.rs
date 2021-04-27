@@ -1,4 +1,5 @@
 pub mod credit_repo;
+pub mod date_formatting;
 pub mod db_init;
 pub mod db_traits;
 pub mod document_repo;
