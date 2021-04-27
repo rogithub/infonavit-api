@@ -2,14 +2,13 @@
 
 #[macro_use]
 extern crate rocket;
+use infonavit_web::info::CreditInfo;
 use rocket_contrib::templates::Template;
-
-use std::collections::HashMap;
 
 #[get("/")]
 fn index() -> Template {
-    let mut context: HashMap<String, i32> = HashMap::new();
-    context.insert("test".to_string(), 1);
+    let info = CreditInfo::new("./db/infonavit.db");
+    let context = info.get_credit("1");
     Template::render("index", &context)
 }
 
