@@ -2,10 +2,13 @@
 
 #[macro_use]
 extern crate rocket;
+use rocket::request::LenientForm;
 use infonavit_api::cors::CORS;
 use infonavit_api::info::CreditInfo;
-use infonavit_api::types::{Credit, Payment};
+use infonavit_api::credit_repo::Credit;
+use infonavit_api::payment_repo::Payment;
 use rocket_contrib::json::Json;
+use rocket::response::status;
 
 #[get("/credit/<id>")]
 fn credit(id: usize) -> Json<Option<Credit>> {
@@ -21,9 +24,16 @@ fn payments(credit_id: usize) -> Json<Vec<Payment>> {
     Json(it)
 }
 
+#[post("/pauments", format = "application/json", data = "<payment>")]
+fn create_payment(payment: LenientForm<Payment>) -> status::Accepted<()> {
+    let info = CreditInfo::new("./db/infonavit.db");
+    info.save_payment(payment.0);
+    status::Accepted(None)
+}
+
 fn main() {
     rocket::ignite()
-        .mount("/", routes![credit, payments])
+        .mount("/", routes![credit, payments,create_payment])
         .attach(CORS)
         .launch();
 }
