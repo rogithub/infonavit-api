@@ -1,22 +1,6 @@
 use crate::db_traits::StructRow;
 use rusqlite::{params, Connection, Error, Result};
-use serde::{Deserialize, Serialize};
-use rocket::request::FromForm;
-
-#[derive(FromForm)]
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct Payment {
-    pub id: u64,
-    pub credit_id: u64,
-    pub payment_date: i64,
-    pub number: usize,
-    pub is_payment_on_time: bool,
-    pub is_via_payrol: bool,
-    pub amount: f64,
-    pub document_id: Option<u64>,
-    pub comments: Option<String>,
-}
+use crate::types::{Payment};
 
 impl Payment {
     pub fn find_by_id(conn: &Connection, id: &str) -> Result<Option<Payment>, Error> {
@@ -114,8 +98,7 @@ impl StructRow for Payment {
 mod test {
     use crate::db_init::DbInit;
     use crate::db_traits::{ConnBuilder, Db, DbConn};
-    use crate::credit_repo::Credit;
-    use crate::payment_repo::Payment;
+    use crate::types::{Payment,Credit};
     use chrono::TimeZone;
     use chrono::Utc;
     fn init_bd() -> Db {

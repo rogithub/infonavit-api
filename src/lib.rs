@@ -6,3 +6,4 @@ pub mod document_repo;
 pub mod file_utils;
 pub mod info;
 pub mod payment_repo;
+pub mod types;

@@ -1,22 +1,6 @@
 use crate::db_traits::StructRow;
 use rusqlite::{params, Connection, Error, Result};
-use serde::{Deserialize, Serialize};
-use rocket::request::FromForm;
-
-#[derive(FromForm)]
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct Credit {
-    pub id: u64,
-    pub credit_number: u64,
-    pub start_date: i64,
-    pub credit_name: String,
-    pub interest_rate_percent: f64,
-    pub montly_payment_by_employer: f64,
-    pub montly_payment_by_employee: f64,
-    pub total_credit_amount: f64,
-    pub years: i32,
-}
+use crate::types::{Credit};
 
 impl Credit {
     pub fn find_by_id(conn: &Connection, id: &str) -> Result<Option<Credit>, Error> {

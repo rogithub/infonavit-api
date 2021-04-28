@@ -1,17 +1,6 @@
 use crate::db_traits::StructRow;
 use rusqlite::{params, Connection, Error, Result};
-use serde::{Deserialize, Serialize};
-
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct Document {
-    pub id: u64,
-    pub document: Vec<u8>,
-    pub file_name: String,
-    pub created_date: i64,
-}
-
+use crate::types::{Document};
 
 impl Document {
     pub fn find_by_id(conn: &Connection, id: &str) -> Result<Option<Document>, Error> {

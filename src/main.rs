@@ -5,8 +5,7 @@ extern crate rocket;
 use rocket::request::LenientForm;
 use infonavit_api::cors::CORS;
 use infonavit_api::info::CreditInfo;
-use infonavit_api::credit_repo::Credit;
-use infonavit_api::payment_repo::Payment;
+use infonavit_api::types::{Credit, Payment};
 use rocket_contrib::json::Json;
 use rocket::response::status;
 

@@ -1,6 +1,5 @@
-use crate::db_traits::{ConnBuilder, Db, DbConn, StructRow};
-use crate::credit_repo::{Credit};
-use crate::payment_repo::{Payment};
+use crate::db_traits::{ConnBuilder, Db, DbConn};
+use crate::types::{Credit, Payment};
 
 pub struct CreditInfo {
     db: Db,
@@ -34,6 +33,6 @@ impl CreditInfo {
     }
 
     pub fn save_payment(&self, payment: Payment) -> usize {
-        payment.insert(&self.db.conn).expect("Failed to save payment")
+        self.db.insert(&payment).expect("Failed to save payment")
     }
 }
