@@ -25,7 +25,7 @@ pub struct Payment {
     pub is_via_payrol: bool,
     pub amount: f64,
     pub document_id: Option<u64>,
-    pub comments: String,
+    pub comments: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
