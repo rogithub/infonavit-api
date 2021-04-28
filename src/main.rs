@@ -2,6 +2,7 @@
 
 #[macro_use]
 extern crate rocket;
+use infonavit_api::cors::CORS;
 use infonavit_api::info::CreditInfo;
 use infonavit_api::types::Credit;
 use rocket_contrib::json::Json;
@@ -14,5 +15,8 @@ fn index(id: usize) -> Json<Option<Credit>> {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+    rocket::ignite()
+        .mount("/", routes![index])
+        .attach(CORS)
+        .launch();
 }

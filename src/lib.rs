@@ -1,3 +1,4 @@
+pub mod cors;
 pub mod credit_repo;
 pub mod db_init;
 pub mod db_traits;
