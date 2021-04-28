@@ -11,6 +11,13 @@ pub struct IndexModel {
     pub credit_start_date: String
 }
 
+impl IndexModel {
+    pub fn saludar(text: &str) ->  String
+    {
+        format!("Hola {}", text)
+    }
+}
+
 pub struct CreditInfo {
     db: Db,
 }

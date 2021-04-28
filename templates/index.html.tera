@@ -27,7 +27,7 @@
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
                             <li>No. {{ credit.credit_number }}</li>
-                            <li>{{ credit_start_date }}</li>
+                            <li>{{ format_date(date="1609329600") }}</li>
                             <li>Mensualidad 1 de 360</li>
                             <li>${{ credit.total_credit_amount }}</li>
                         </ul>
