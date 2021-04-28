@@ -2,26 +2,17 @@
 
 #[macro_use]
 extern crate rocket;
-use std::collections::BTreeMap;
-use infonavit_web::info::CreditInfo;
-use rocket_contrib::templates::Template;
-use infonavit_web::date_formatting::format_date;
+use infonavit_api::info::CreditInfo;
+use infonavit_api::types::Credit;
+use rocket_contrib::json::Json;
 
-#[get("/")]
-fn index() -> Template {
+#[get("/credit/<id>")]
+fn index(id: usize) -> Json<Option<Credit>> {
     let info = CreditInfo::new("./db/infonavit.db");
-    let context = info.build("1");
-    Template::render("index", &context)
+    let it = info.get_credit(&id.to_string());
+    Json(it)
 }
 
 fn main() {
-    rocket::ignite()
-        .mount("/", routes![index])
-        .attach(Template::custom(|engines|{
-            let url = BTreeMap::new();
-            engines
-                .tera
-                .register_function("format_date", format_date(url))
-        }))        
-        .launch();
+    rocket::ignite().mount("/", routes![index]).launch();
 }

@@ -1,5 +1,5 @@
 [package]
-name = "infonavit_web"
+name = "infonavit_api"
 version = "0.1.0"
 authors = ["rodrigo debian <correo.rodrigo@gmail.com>"]
 edition = "2018"
@@ -13,11 +13,11 @@ serde = { version = "1.0", features = ["derive"] }
 [dependencies.rocket_contrib]
 version = "0.4.7"
 default-features = false
-features = ["json", "tera_templates"]
+features = ["json"]
 
 [dependencies.rusqlite]
 version = "0.25.1"
 features = ["bundled"]
 
-[dependencies.chrono]
+[dev-dependencies.chrono]
 version = "0.4"
