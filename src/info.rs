@@ -1,5 +1,5 @@
 use crate::db_traits::{ConnBuilder, Db, DbConn};
-use crate::types::Credit;
+use crate::types::{Credit, Payment};
 
 pub struct CreditInfo {
     db: Db,
@@ -21,6 +21,14 @@ impl CreditInfo {
             .exec(&|conn| Credit::find_by_id(&conn, id))
             .expect("Faild to retrieve credit");
 
+        it
+    }
+
+    pub fn get_payments(&self, credit_id: &str) -> Vec<Payment> {
+        let it = self
+            .db
+            .exec(&|conn| Payment::for_credit(&conn, credit_id))
+            .expect("Faild to retrieve credit");
         it
     }
 }

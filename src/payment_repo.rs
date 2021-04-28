@@ -26,6 +26,28 @@ impl Payment {
             Some(result) => result.and_then(|credit| Ok(Some(credit))),
         }
     }
+
+    pub fn for_credit(conn: &Connection, credit_id: &str) -> Result<Vec<Payment>, Error> {
+        let sql = "SELECT id,credit_id,payment_date,number,amount,is_payment_on_time,is_via_payrol,document_id,comments FROM payments WHERE credit_id = :credit_id ORDER BY payment_date DESC;";
+        let mut stmt = conn.prepare(sql)?;
+        let item_iter = stmt.query_map(&[(":credit_id", credit_id)], |row| {
+            Ok(Payment {
+                id: row.get(0)?,
+                credit_id: row.get(1)?,
+                payment_date: row.get(2)?,
+                number: row.get(3)?,
+                amount: row.get(4)?,
+                is_payment_on_time: row.get(5)?,
+                is_via_payrol: row.get(6)?,
+                document_id: row.get(7)?,
+                comments: row.get(8)?,
+            })
+        })?;
+
+        let transformed = item_iter.map(|res| res.unwrap()).collect();
+
+        Ok(transformed)
+    }
 }
 
 impl StructRow for Payment {
