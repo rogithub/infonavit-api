@@ -3,4 +3,5 @@
 # Run command 
 ``` code bash
 $ rustup override set nightly
+$ cargo run
 ```
