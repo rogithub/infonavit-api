@@ -24,7 +24,7 @@ fn payments(credit_id: usize) -> Json<Vec<Payment>> {
 }
 
 #[post("/payment", format = "application/json", data = "<payment>")]
-fn create_payment<'a>(payment: Json<Payment>) -> Json<usize> {
+fn create_payment(payment: Json<Payment>) -> Json<usize> {
     let info = CreditInfo::new("./db/infonavit.db");
     let it = info.save_payment(payment.0);
     Json(it)
