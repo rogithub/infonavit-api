@@ -2,12 +2,15 @@
 
 #[macro_use]
 extern crate rocket;
-use rocket::request::LenientForm;
-use infonavit_api::cors::CORS;
 use infonavit_api::info::CreditInfo;
 use infonavit_api::types::{Credit, Payment};
+use rocket::http::Method;
+use rocket::http::Status;
+use rocket::request::LenientForm;
+use rocket::Response;
 use rocket_contrib::json::Json;
-use rocket::response::status;
+use rocket_cors::{AllowedHeaders, AllowedOrigins};
+use std::error::Error;
 
 #[get("/credit/<id>")]
 fn credit(id: usize) -> Json<Option<Credit>> {
@@ -16,23 +19,42 @@ fn credit(id: usize) -> Json<Option<Credit>> {
     Json(it)
 }
 
-#[get("/payments/<credit_id>")]
+#[get("/credit/<credit_id>/payments")]
 fn payments(credit_id: usize) -> Json<Vec<Payment>> {
     let info = CreditInfo::new("./db/infonavit.db");
     let it = info.get_payments(&credit_id.to_string());
     Json(it)
 }
 
-#[post("/pauments", format = "application/json", data = "<payment>")]
-fn create_payment(payment: LenientForm<Payment>) -> status::Accepted<()> {
+#[post("/payment", format = "application/json", data = "<payment>")]
+fn create_payment<'a>(payment: LenientForm<Payment>) -> Response<'a> {
     let info = CreditInfo::new("./db/infonavit.db");
     info.save_payment(payment.0);
-    status::Accepted(None)
+    let mut res = Response::new();
+    res.set_status(Status::new(200, "No Content"));
+    res
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
+    let allowed_origins = AllowedOrigins::All;
+
+    // You can also deserialize this
+    let cors = rocket_cors::CorsOptions {
+        allowed_origins,
+        allowed_methods: vec![Method::Get, Method::Post]
+            .into_iter()
+            .map(From::from)
+            .collect(),
+        allowed_headers: AllowedHeaders::All,
+        allow_credentials: true,
+        ..Default::default()
+    }
+    .to_cors()?;
+
     rocket::ignite()
-        .mount("/", routes![credit, payments,create_payment])
-        .attach(CORS)
+        .mount("/", routes![credit, payments, create_payment])
+        .attach(cors)
         .launch();
+
+    Ok(())
 }
