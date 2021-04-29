@@ -5,8 +5,6 @@ extern crate rocket;
 use infonavit_api::info::CreditInfo;
 use infonavit_api::types::{Credit, Payment};
 use rocket::http::Method;
-use rocket::http::Status;
-use rocket::Response;
 use rocket_contrib::json::Json;
 use rocket_cors::{AllowedHeaders, AllowedOrigins};
 use std::error::Error;
@@ -26,12 +24,10 @@ fn payments(credit_id: usize) -> Json<Vec<Payment>> {
 }
 
 #[post("/payment", format = "application/json", data = "<payment>")]
-fn create_payment<'a>(payment: Json<Payment>) -> Response<'a> {
+fn create_payment<'a>(payment: Json<Payment>) -> Json<usize> {
     let info = CreditInfo::new("./db/infonavit.db");
-    info.save_payment(payment.0);
-    let mut res = Response::new();
-    res.set_status(Status::new(200, "No Content"));
-    res
+    let it = info.save_payment(payment.0);
+    Json(it)
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
